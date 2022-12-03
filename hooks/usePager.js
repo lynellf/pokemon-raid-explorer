@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { usePagination } from "@mantine/hooks";
 import chunkArr from "utils/chunkArr";
 
