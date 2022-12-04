@@ -18,6 +18,7 @@ export const initialQuery = {
   baseAtk: { op: "gte", value: 0 },
   baseDef: { op: "gte", value: 0 },
   baseSpa: { op: "gte", value: 0 },
+  baseSpd: { op: "gte", value: 0 },
   baseSpeed: { op: "gte", value: 0 }
 };
 
@@ -70,6 +71,7 @@ export default function usePokemonDataFilters() {
     baseAtk,
     baseDef,
     baseSpa,
+    baseSpd,
     baseSpeed
   } = query;
 
@@ -84,6 +86,7 @@ export default function usePokemonDataFilters() {
         "baseStats.baseAtk": { [`$${baseAtk.op}`]: baseAtk.value },
         "baseStats.baseDef": { [`$${baseDef.op}`]: baseDef.value },
         "baseStats.baseSpa": { [`$${baseSpa.op}`]: baseSpa.value },
+        "baseStats.baseSpd": { [`$${baseSpd.op}`]: baseSpd.value },
         "baseStats.baseSpeed": { [`$${baseSpeed.op}`]: baseSpeed.value }
       })
     )
