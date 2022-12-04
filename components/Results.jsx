@@ -99,7 +99,7 @@ export default function Results({ results, pagination, total }) {
               ))}
             </FlexList>
           </div>
-          {data.suggestedMoves.length && (
+          {data.suggestedMoves.length > 0 && (
             <div>
               <p>
                 <strong>Suggested Moves: </strong>
