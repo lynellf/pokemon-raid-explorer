@@ -9,20 +9,24 @@ import capitalizeFirstChar from "utils/capitalizeFirstChar";
 /**
  * Multi-select Options
  */
-const moveSelectOptions = Object.keys(moveTable).map((label) => ({
-  label,
-  value: label
-}));
+const moveSelectOptions = Object.keys(moveTable)
+  .sort()
+  .map((label) => ({
+    label,
+    value: label
+  }));
 
-const abilitySelectOptions = abilityList.map((label) => ({
+const abilitySelectOptions = abilityList.sort().map((label) => ({
   label: label,
   value: label
 }));
 
-const typeSelectOptions = Object.keys(typeTable.attacking).map((value) => ({
-  label: capitalizeFirstChar(value),
-  value: capitalizeFirstChar(value)
-}));
+const typeSelectOptions = Object.keys(typeTable.attacking)
+  .sort()
+  .map((value) => ({
+    label: capitalizeFirstChar(value),
+    value: capitalizeFirstChar(value)
+  }));
 
 const operandOptions = [
   { label: "<", value: "lt" },
