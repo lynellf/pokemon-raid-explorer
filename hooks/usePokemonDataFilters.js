@@ -1,5 +1,6 @@
 import { useState } from "react";
 import sift from "sift";
+import { sum } from "simple-statistics";
 import pokemonResultList from "data/pokemon-results-list";
 import moveTable from "data/move-table";
 import typeTable from "data/type-table";
@@ -44,6 +45,20 @@ const byTypeCoverage = (typeCoverage) => {
   };
 };
 
+/**
+ * @description Array filter callback. We want to sort results by their base
+ * stat total, from highest to lowest. At least by default.
+ * @param {typeof pokemonResultList[number]} a
+ * @param {typeof pokemonResultList[number]} z
+ */
+const byBaseStatTotal = (a, z) => {
+  const sumOfA = sum(Object.values(a.baseStats).map(Number));
+  const sumOfZ = sum(Object.values(z.baseStats).map(Number));
+
+  // ensures descending order when subtracing A from Z
+  return sumOfZ - sumOfA;
+};
+
 export default function usePokemonDataFilters() {
   const [query, setQuery] = useState(initialQuery);
   const {
@@ -77,7 +92,8 @@ export default function usePokemonDataFilters() {
         ...data,
         suggestedMoves: data.moves.filter(byTypeCoverage(typeCoverage))
       };
-    });
+    })
+    .sort(byBaseStatTotal);
 
   return {
     query,
