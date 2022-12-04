@@ -2,6 +2,7 @@ import { quantileRank } from "simple-statistics";
 import pokemonTable from "data/pokemon-table";
 import typeTable from "data/type-table";
 import capitalizeFirstChar from "utils/capitalizeFirstChar";
+import moveTable from "data/move-table";
 
 const asNumValues = (record) =>
   Object.fromEntries(
@@ -59,6 +60,51 @@ const getQuantileRk = (data, index) =>
     Number(data.baseStats[baseStatKeys[index]])
   );
 
+/**
+ * Is the pokemon better with physical or special attacks?
+ */
+function getSpecialty({ atkRank, spaRank }) {
+  const diff = atkRank * 100 - spaRank * 100;
+  const isMixed = diff <= 15 && diff >= -15;
+
+  if (isMixed) return "Mixed";
+
+  const isPhysical = diff > 0;
+
+  if (isPhysical) return "Physical";
+
+  return "Special";
+}
+
+/**
+ * @description array filter callback for the sake of readability
+ * Move list filter based on attacks suited for a pokemon's offensive specialty
+ * eg. Focus Blast over Close Combat for a Pokemon that is a special attacker
+ * @param {string} specialty
+ */
+const bySpecialty =
+  (specialty = "Mixed") =>
+  (moveName) => {
+    const isMixed = specialty === "Mixed";
+    if (isMixed) return true;
+
+    const { moveCategory } = moveTable[moveName];
+
+    return moveCategory.toLowerCase().includes(specialty.toLowerCase());
+  };
+
+/**
+ * @description array reduce callback
+ * @param {string[]} currentCoverage list of types each move is "super effective against"
+ * @param {string} moveName
+ */
+const asTypeCoverageList = (currentCoverage = [], moveName) => {
+  const { moveType } = moveTable[moveName];
+  const moveTypeLower = moveType.toLowerCase().trim();
+  const typesCovered = typeTable.attacking[moveTypeLower] ?? [];
+  return [...currentCoverage, ...typesCovered];
+};
+
 // pokemon list to display within the results component
 const pokemonResultList = pokemonList
   .map((data) => ({
@@ -103,6 +149,24 @@ const pokemonResultList = pokemonList
         )
       )
     )
-  }));
+  }))
+  .map((data) => {
+    // we want a super-effective-against list similar to "weaknesses" and "resistances"
+    const {
+      quantiles: { atk, spa }
+    } = data;
+    const offensiveSpecialty = getSpecialty({ atkRank: atk, spaRank: spa });
+    const typeCoverage = Array.from(
+      new Set(
+        data.moves
+          .filter(bySpecialty(offensiveSpecialty))
+          .reduce(asTypeCoverageList, [])
+      )
+    );
+    return {
+      ...data,
+      typeCoverage
+    };
+  });
 
 export default pokemonResultList;
