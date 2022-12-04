@@ -23,8 +23,17 @@ const PagerContainer = styled.div`
  * @property {ReturnType<typeof import('hooks/usePokemonDataFilters')['default']>['results']} ResultsProps.results
  * @param {ResultsProps} { results }
  */
-export default function Results({ results = [], pagination, total }) {
+export default function Results({ results, pagination, total }) {
   const { active, setPage } = pagination;
+  const hasNoResults = results.length === 0;
+
+  if (hasNoResults) {
+    return (
+      <div>
+        <PaddedTitle>No Results</PaddedTitle>
+      </div>
+    );
+  }
 
   return (
     <div>
