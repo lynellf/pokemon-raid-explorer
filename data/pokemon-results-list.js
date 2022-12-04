@@ -111,12 +111,12 @@ const pokemonResultList = pokemonList
     // apply quantile ranks
     ...data,
     quantiles: {
-      hp: getQuantileRk(data, 0),
-      atk: getQuantileRk(data, 1),
-      def: getQuantileRk(data, 2),
-      spa: getQuantileRk(data, 3),
-      spd: getQuantileRk(data, 4),
-      speed: getQuantileRk(data, 5)
+      baseHP: getQuantileRk(data, 0),
+      baseAtk: getQuantileRk(data, 1),
+      baseDef: getQuantileRk(data, 2),
+      baseSpa: getQuantileRk(data, 3),
+      baseSpd: getQuantileRk(data, 4),
+      baseSpeed: getQuantileRk(data, 5)
     }
   }))
   .map((data) => ({

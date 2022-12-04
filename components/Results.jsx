@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Table, List, Container, Pagination } from "@mantine/core";
 import PaddedTitle from "components/PaddedTitle";
+import getTier from "utils/getTier";
 
 const FlexList = styled(List)`
   display: flex;
@@ -64,26 +65,15 @@ export default function Results({ results, pagination, total }) {
               <tbody>
                 <tr>
                   {Object.entries(data.baseStats).map(([label, value]) => (
-                    <td key={label}>{value}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </Table>
-            <Table>
-              <thead>
-                <tr>
-                  <th>HP Quantile</th>
-                  <th>ATK Quantile</th>
-                  <th>DEF Quantile</th>
-                  <th>SPA Quantile</th>
-                  <th>SPD Quantile</th>
-                  <th>Speed Quantile</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {Object.entries(data.quantiles).map(([label, value]) => (
-                    <td key={label}>{value.toFixed(2)}</td>
+                    <td key={label}>
+                      {value}
+                      <sup>
+                        {" "}
+                        <strong>
+                          {getTier(data.quantiles[label] * 100)}-Tier
+                        </strong>
+                      </sup>
+                    </td>
                   ))}
                 </tr>
               </tbody>
