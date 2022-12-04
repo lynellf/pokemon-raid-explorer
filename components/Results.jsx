@@ -20,7 +20,7 @@ const PagerContainer = styled.div`
 
 /**
  * @typedef {Object} ResultsProps
- * @property {import('data/pokemon-results-list')['default']} ResultsProps.results
+ * @property {ReturnType<typeof import('hooks/usePokemonDataFilters')['default']>['results']} ResultsProps.results
  * @param {ResultsProps} { results }
  */
 export default function Results({ results = [], pagination, total }) {
@@ -81,7 +81,9 @@ export default function Results({ results = [], pagination, total }) {
             </Table>
           </div>
           <div>
-            <strong>Types Resisted: </strong>
+            <p>
+              <strong>Types Resisted: </strong>
+            </p>
             <FlexList listStyleType={"none"}>
               {data.resistances.map((type) => (
                 <FlexList.Item key={type}>{type}</FlexList.Item>
@@ -89,13 +91,27 @@ export default function Results({ results = [], pagination, total }) {
             </FlexList>
           </div>
           <div>
-            <strong>Types Weak Against: </strong>
+            <p>
+              <strong>Types Weak Against: </strong>
+            </p>
             <FlexList listStyleType={"none"}>
               {data.weaknesses.map((type) => (
                 <FlexList.Item key={type}>{type}</FlexList.Item>
               ))}
             </FlexList>
           </div>
+          {data.suggestedMoves.length && (
+            <div>
+              <p>
+                <strong>Suggested Moves: </strong>
+              </p>
+              <FlexList listStyleType={"none"}>
+                {data.suggestedMoves.map((move) => (
+                  <FlexList.Item key={move}>{move}</FlexList.Item>
+                ))}
+              </FlexList>
+            </div>
+          )}
         </BorderedBox>
       ))}
       <PagerContainer>

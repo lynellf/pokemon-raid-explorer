@@ -2836,7 +2836,7 @@ const moveTable = {
   },
   "Mirror Coat": {
     moveAccuracy: "100",
-    moveCategory: " Special Move",
+    moveCategory: " Other Move",
     moveEffectPct: "--",
     moveName: "Mirror Coat",
     movePower: "??",
