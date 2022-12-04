@@ -60,7 +60,10 @@ function handleInputChange(handleChange, query) {
     // so we're using a period delimiter to denote depth
     const [topKey, subKey] = keys.split(".");
     const currentValue = query[topKey];
-    handleChange({ key: topKey, value: { ...currentValue, [subKey]: value } });
+    handleChange({
+      key: topKey,
+      value: { ...currentValue, [subKey]: value ?? 0 }
+    });
   };
 }
 
