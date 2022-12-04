@@ -96,7 +96,14 @@ export default function Filters(props) {
         label="Can resist the following types:"
         data={typeSelectOptions}
         searchable
-        placeholder="Select Resistances"
+        placeholder="Select Types"
+      />
+      <MultiSelect
+        onChange={onMultiSelectChange("typeCoverage")}
+        label="Has Type Coverage Against:"
+        data={typeSelectOptions}
+        searchable
+        placeholder="Select Types"
       />
       <PaddedTitle order={2}>Base Stat Filters</PaddedTitle>
       <FlexContainer>
