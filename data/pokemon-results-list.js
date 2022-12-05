@@ -168,5 +168,7 @@ const pokemonResultList = pokemonList
       typeCoverage
     };
   });
-
+export const asTable = Object.fromEntries(
+  pokemonResultList.map((p) => [p.name, p])
+);
 export default pokemonResultList;
