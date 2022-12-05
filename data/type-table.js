@@ -1,3 +1,5 @@
+import capitalizeFirstChar from "utils/capitalizeFirstChar";
+
 const typeTable = {
   // which move types are super effective against other types?
   // ie. bug type moves are "super effective" against grass-type pokemon
@@ -56,5 +58,9 @@ const typeTable = {
     water: ["Water", "Steel"]
   }
 };
+
+export const asList = Object.keys(typeTable.attacking)
+  .sort()
+  .map((type) => capitalizeFirstChar(type));
 
 export default typeTable;
