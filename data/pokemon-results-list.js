@@ -1,3 +1,4 @@
+import { intersection } from "lodash";
 import { quantileRank } from "simple-statistics";
 import pokemonTable from "data/pokemon-table";
 import typeTable from "data/type-table";
@@ -167,6 +168,22 @@ const pokemonResultList = pokemonList
       ...data,
       typeCoverage
     };
+  })
+  .map((data) => {
+    // pokemon with dual types may have weaknesses and resistances
+    // which cancel each other out, remove any intersecting resistances/weaknesses
+    // as they shall be seen as neutral coverage
+    const intersectingDefenses = intersection(
+      data.resistances,
+      data.weaknesses
+    );
+    const resistances = data.resistances.filter(
+      (r) => !intersectingDefenses.includes(r)
+    );
+    const weaknesses = data.weaknesses.filter(
+      (w) => !intersectingDefenses.includes(w)
+    );
+    return { ...data, resistances, weaknesses };
   });
 export const asTable = Object.fromEntries(
   pokemonResultList.map((p) => [p.name, p])
