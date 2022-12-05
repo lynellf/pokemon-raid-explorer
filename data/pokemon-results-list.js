@@ -4,6 +4,7 @@ import pokemonTable from "data/pokemon-table";
 import typeTable from "data/type-table";
 import capitalizeFirstChar from "utils/capitalizeFirstChar";
 import moveTable from "data/move-table";
+import pokemonNotYetInGame from "./pokemon-not-yet-in-game";
 
 const asNumValues = (record) =>
   Object.fromEntries(
@@ -184,7 +185,8 @@ const pokemonResultList = pokemonList
       (w) => !intersectingDefenses.includes(w)
     );
     return { ...data, resistances, weaknesses };
-  });
+  })
+  .filter((p) => !pokemonNotYetInGame.includes(p.name));
 export const asTable = Object.fromEntries(
   pokemonResultList.map((p) => [p.name, p])
 );
