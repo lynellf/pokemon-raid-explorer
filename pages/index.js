@@ -1,5 +1,5 @@
 import Head from "next/head";
-import FilterWithResults from "views/FilterWithResults";
+import Landing from "views/Landing";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <FilterWithResults />
+        <Landing />
       </main>
     </div>
   );
