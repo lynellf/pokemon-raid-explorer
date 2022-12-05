@@ -6,7 +6,7 @@ export default function chunkArr(arr = [], size = 10) {
 
   // arr len of 5
   // 5 / 10 = 0.5 (1 chunk)
-  const totalChunks = range(Math.round(arr.length / size));
+  const totalChunks = range(Math.ceil(arr.length / size));
 
   // I didn't want to use any control flow statements
   // so elected to use a array mutating method (splice)
