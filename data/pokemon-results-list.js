@@ -171,6 +171,10 @@ const pokemonResultList = pokemonList
     };
   })
   .map((data) => {
+    const types = data.types;
+    const immunities = Array.from(
+      new Set(types.flatMap((type) => typeTable.immunity[type.toLowerCase()]))
+    );
     // pokemon with dual types may have weaknesses and resistances
     // which cancel each other out, remove any intersecting resistances/weaknesses
     // as they shall be seen as neutral coverage
@@ -178,9 +182,9 @@ const pokemonResultList = pokemonList
       data.resistances,
       data.weaknesses
     );
-    const resistances = data.resistances.filter(
-      (r) => !intersectingDefenses.includes(r)
-    );
+    const resistances = data.resistances
+      .filter((r) => !intersectingDefenses.includes(r))
+      .concat(immunities);
     const weaknesses = data.weaknesses.filter(
       (w) => !intersectingDefenses.includes(w)
     );
