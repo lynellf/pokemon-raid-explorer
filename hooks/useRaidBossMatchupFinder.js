@@ -15,16 +15,19 @@ const STATE_FILTERING = "FILTERING";
 const STATE_THINKING = "THINKING";
 
 // Guards
-const canFilter = ({ raidBossName, teraType }) => {
+const canFilter = ({ raidBoss, teraType }) => {
   // ensure each value is not falsy
-  const hasValues = [raidBossName, teraType].every(Boolean);
+  const hasValues = [raidBoss.name, teraType].every(Boolean);
 
   return hasValues;
 };
 
 // Actions
-const setRaidBossName = assign({
-  raidBossName: (context, event) => (context.raidBossName = event.data.value)
+const setRaidBoss = assign({
+  raidBossName: (context, event) => {
+    context.raidBoss = pokemonTable[event.data.value];
+    console.log({ context });
+  }
 });
 
 const setTeraType = assign({
@@ -33,10 +36,10 @@ const setTeraType = assign({
 
 const sendFilters =
   (handleChange) =>
-  ({ raidBossName, teraType }) => {
-    const raidBoss = pokemonTable[raidBossName];
-
+  ({ teraType, raidBoss }) => {
     const raidBossTypes = raidBoss.types;
+
+    console.log({ raidBoss });
 
     // must be able to resist these types
     handleChange({ key: "resistances", value: raidBossTypes });
@@ -52,14 +55,15 @@ const raidBossMatchupMachine = (handleChange) =>
       predictableActionArguments: true,
       context: {
         raidBossName: "",
-        teraType: ""
+        teraType: "",
+        raidBoss: { quantiles: { baseSpd: 0, baseDef: 0 } }
       },
       states: {
         [STATE_IDLE]: {
           on: {
             [EVENT_SEND_RAID_BOSS]: {
               target: STATE_THINKING,
-              actions: ["setRaidBossName"]
+              actions: ["setRaidBoss"]
             },
             [EVENT_SEND_TERA_TYPE]: {
               target: STATE_THINKING,
@@ -80,7 +84,7 @@ const raidBossMatchupMachine = (handleChange) =>
     },
     {
       actions: {
-        setRaidBossName,
+        setRaidBoss,
         setTeraType,
         sendFilters: sendFilters(handleChange)
       }
@@ -99,9 +103,24 @@ export default function useRaidBossMatchupFinder() {
    * See this github issue for more information:
    * https://github.com/statelyai/xstate/issues/995
    */
-  const [_state, send] = useMachine(machine);
+  const [state, send] = useMachine(machine);
 
-  return { send, results };
+  /**
+   * @type {typeof pokemonTable[string]}
+   */
+  const {
+    quantiles: { baseSpd, baseDef }
+  } = state.context.raidBoss;
+
+  // by offensive advantages
+  const offensivePriority =
+    baseSpd * 100 - baseDef * 100 > -1 ? "baseAtk" : "baseSpa";
+
+  const sortedResults = results.sort((a, z) => {
+    return z.baseStats[offensivePriority] - a.baseStats[offensivePriority];
+  });
+
+  return { send, results: sortedResults };
 }
 
 /**
