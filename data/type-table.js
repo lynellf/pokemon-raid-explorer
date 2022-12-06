@@ -56,6 +56,26 @@ const typeTable = {
       "Fairy"
     ],
     water: ["Water", "Steel"]
+  },
+  immunity: {
+    bug: [],
+    dark: ["Psychic"],
+    dragon: [],
+    electric: [],
+    fairy: ["Dragon"],
+    fighting: [],
+    fire: [],
+    flying: ["Ground"],
+    ghost: ["Normal", "Fighting"],
+    grass: [],
+    ground: ["Electric"],
+    ice: [],
+    normal: ["Ghost"],
+    poison: [],
+    psychic: [],
+    rock: [],
+    steel: ["Poison"],
+    water: []
   }
 };
 
