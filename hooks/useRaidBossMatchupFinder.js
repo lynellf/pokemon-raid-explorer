@@ -3,6 +3,7 @@ import { createMachine, assign } from "xstate";
 import { useMachine } from "@xstate/react";
 import { asTable as pokemonTable } from "data/pokemon-results-list";
 import usePokemonDataFilters from "hooks/usePokemonDataFilters";
+import asPercent from "utils/asPercent";
 
 // Event Types
 export const EVENT_SEND_RAID_BOSS = "SEND_RAID_BOSS";
@@ -26,7 +27,6 @@ const canFilter = ({ raidBoss, teraType }) => {
 const setRaidBoss = assign({
   raidBossName: (context, event) => {
     context.raidBoss = pokemonTable[event.data.value];
-    console.log({ context });
   }
 });
 
@@ -91,6 +91,12 @@ const raidBossMatchupMachine = (handleChange) =>
     }
   );
 
+/**
+ * @description Responsible for the synchronization and dispatch of a selected "Raid Boss's"
+ * types and tera type with `usePokemonDataFilters`, as the hook will attempt to filter data
+ * after each "handleChange" event. This hook ensures the needed events are dispatched in a
+ * single batch.
+ */
 export default function useRaidBossMatchupFinder() {
   const { handleChange, results } = usePokemonDataFilters();
   const machine = useMemo(
@@ -114,8 +120,9 @@ export default function useRaidBossMatchupFinder() {
 
   // by offensive advantages
   const offensivePriority =
-    baseSpd * 100 - baseDef * 100 > -1 ? "baseAtk" : "baseSpa";
+    asPercent(baseSpd) - asPercent(baseDef) > -1 ? "baseAtk" : "baseSpa";
 
+  // sorting by descending order
   const sortedResults = results.sort((a, z) => {
     return z.baseStats[offensivePriority] - a.baseStats[offensivePriority];
   });

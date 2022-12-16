@@ -2,9 +2,9 @@ import { intersection } from "lodash";
 import { quantileRank } from "simple-statistics";
 import pokemonTable from "data/pokemon-table";
 import typeTable from "data/type-table";
-import capitalizeFirstChar from "utils/capitalizeFirstChar";
 import moveTable from "data/move-table";
-import pokemonNotYetInGame from "./pokemon-not-yet-in-game";
+import pokemonNotYetInGame from "data/pokemon-not-yet-in-game";
+import capitalizeFirstChar from "utils/capitalizeFirstChar";
 
 const asNumValues = (record) =>
   Object.fromEntries(
