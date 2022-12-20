@@ -98,7 +98,7 @@ const raidBossMatchupMachine = (handleChange) =>
  * single batch.
  */
 export default function useRaidBossMatchupFinder() {
-  const { handleChange, results } = usePokemonDataFilters();
+  const { handleChange, nonTeamSuggestions } = usePokemonDataFilters();
   const machine = useMemo(
     () => raidBossMatchupMachine(handleChange),
     [handleChange]
@@ -123,7 +123,7 @@ export default function useRaidBossMatchupFinder() {
     asPercent(baseSpd) - asPercent(baseDef) > -1 ? "baseAtk" : "baseSpa";
 
   // sorting by descending order
-  const sortedResults = results.sort((a, z) => {
+  const sortedResults = nonTeamSuggestions.sort((a, z) => {
     return z.baseStats[offensivePriority] - a.baseStats[offensivePriority];
   });
 
