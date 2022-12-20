@@ -1,18 +1,12 @@
+import { useMemo } from "react";
 import { Select, List, Divider, Button, Container } from "@mantine/core";
+import { curry } from "lodash";
 import styled from "styled-components";
-import pokemonResultsList from "data/pokemon-results-list";
-
-const selectOptions = pokemonResultsList.map(({ name }) => ({
-  label: name,
-  value: name
-}));
-
-const sampleTeam = pokemonResultsList
-  .map(({ name }) => ({ name }))
-  .slice(0, 10);
+import useMyTeam from "hooks/useMyTeam";
+import pokemonResultList from "data/pokemon-results-list";
 
 const FixedHeightList = styled(List)`
-  max-height: 600px;
+  max-height: 80vh;
   overflow-y: scroll;
   margin-top: 1rem;
 `;
@@ -23,14 +17,18 @@ const FlexContainer = styled.div`
   padding: 1rem;
 `;
 
-function ListItem(props) {
+function ListItem({ name, onClick }) {
+  const handleRemove = curry(onRemove);
+
   return (
     <>
       <Divider />
       <li>
         <FlexContainer>
-          <span>{props.name}</span>
-          <Button color="red">Remove</Button>
+          <span>{name}</span>
+          <Button onClick={handleRemove({ name, onClick })} color="red">
+            Remove
+          </Button>
         </FlexContainer>
       </li>
     </>
@@ -38,17 +36,36 @@ function ListItem(props) {
 }
 
 export default function MyTeam() {
+  const { team, handleMemberChange } = useMyTeam();
+  const selectOptions = useMemo(
+    () =>
+      pokemonResultList
+        .map(({ name }) => name)
+        .sort()
+        .filter((name) => !team.includes(name))
+        .map((name) => ({ label: name, value: name })),
+    [team]
+  );
   return (
     <Container>
       <div>
         <p>Already have Pokemon to use for Tera raids? Add them here!</p>
       </div>
-      <Select label="Add Pokemon to team" data={selectOptions} searchable />
+      <Select
+        label="Add Pokemon to team"
+        data={selectOptions}
+        searchable
+        onChange={handleMemberChange}
+      />
       <FixedHeightList listStyleType="none">
-        {sampleTeam.map((p) => (
-          <ListItem key={p.name} name={p.name} />
+        {team.sort().map((p) => (
+          <ListItem onClick={handleMemberChange} key={p} name={p} />
         ))}
       </FixedHeightList>
     </Container>
   );
+}
+
+function onRemove({ name, onClick }, _event) {
+  onClick(name);
 }
