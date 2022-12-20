@@ -39,22 +39,22 @@ export default function useMyTeam() {
  * @param {string} memberName
  */
 function toggleTeamMember(setTeam, memberName) {
-  setTeam((currentTeam) => {
-    const shallRemoveMember = currentTeam.includes(memberName);
+  setTeam((current) => {
+    const shallRemoveMember = current.team?.includes(memberName);
 
     if (shallRemoveMember) {
-      const updatedTeam = currentTeam.filter((m) => m !== memberName);
+      const updatedTeam = current.team.filter((m) => m !== memberName);
 
       // sync with local storage
       localforage.setItem(STORAGE_KEY, updatedTeam);
 
-      return updatedTeam;
+      return { ...current, team: updatedTeam };
     }
 
-    const updatedTeam = [...currentTeam, memberName];
+    const updatedTeam = [...current.team, memberName];
 
     // sync with local storage
     localforage.setItem(STORAGE_KEY, updatedTeam);
-    return updatedTeam;
+    return { ...current, team: updatedTeam };
   });
 }
