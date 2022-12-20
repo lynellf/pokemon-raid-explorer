@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { createMachine, assign } from "xstate";
 import { useMachine } from "@xstate/react";
+import { curry } from "lodash";
 import { asTable as pokemonTable } from "data/pokemon-results-list";
 import usePokemonDataFilters from "hooks/usePokemonDataFilters";
 import asPercent from "utils/asPercent";
@@ -38,8 +39,6 @@ const sendFilters =
   (handleChange) =>
   ({ teraType, raidBoss }) => {
     const raidBossTypes = raidBoss.types;
-
-    console.log({ raidBoss });
 
     // must be able to resist these types
     handleChange({ key: "resistances", value: raidBossTypes });
@@ -98,7 +97,8 @@ const raidBossMatchupMachine = (handleChange) =>
  * single batch.
  */
 export default function useRaidBossMatchupFinder() {
-  const { handleChange, nonTeamSuggestions } = usePokemonDataFilters();
+  const { handleChange, nonTeamSuggestions, teamSuggestions } =
+    usePokemonDataFilters();
   const machine = useMemo(
     () => raidBossMatchupMachine(handleChange),
     [handleChange]
@@ -118,18 +118,28 @@ export default function useRaidBossMatchupFinder() {
     quantiles: { baseSpd, baseDef }
   } = state.context.raidBoss;
 
-  // by offensive advantages
   const offensivePriority =
     asPercent(baseSpd) - asPercent(baseDef) > -1 ? "baseAtk" : "baseSpa";
 
-  // sorting by descending order
-  const sortedResults = nonTeamSuggestions.sort((a, z) => {
-    return z.baseStats[offensivePriority] - a.baseStats[offensivePriority];
-  });
+  const byOffensivePriority = curry(compareAtkStats, 2);
 
-  return { send, results: sortedResults };
+  // sorting by descending order
+  // by offensive advantages (atk or sp. atk)
+  const nonTeamSuggestionsSorted = nonTeamSuggestions.sort(
+    byOffensivePriority(offensivePriority)
+  );
+
+  const teamSuggestionsSorted = teamSuggestions.sort(
+    byOffensivePriority(offensivePriority)
+  );
+
+  return {
+    send,
+    nonTeamSuggestions: nonTeamSuggestionsSorted,
+    teamSuggestions: teamSuggestionsSorted
+  };
 }
 
-/**
- * Why does this exist?
- */
+function compareAtkStats(offensivePriority, a, z) {
+  return z.baseStats[offensivePriority] - a.baseStats[offensivePriority];
+}

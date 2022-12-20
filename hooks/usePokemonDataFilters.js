@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { sum } from "simple-statistics";
 import { curry } from "lodash";
 import sift from "sift";
@@ -30,17 +30,26 @@ export default function usePokemonDataFilters() {
   const byAllQueries = curry(applyQueryObj);
   const withSuggestedMoves = curry(appendSuggestedMoves);
 
-  const nonTeamSuggestions = pokemonResultList
-    .filter(byAllQueries(query))
-    .map(withSuggestedMoves(query))
-    .sort(byBaseStatTotal);
-
-  const teamSuggestions = isReady
-    ? team
+  const nonTeamSuggestions = useMemo(
+    () =>
+      pokemonResultList
         .filter(byAllQueries(query))
         .map(withSuggestedMoves(query))
-        .sort(byBaseStatTotal)
-    : [];
+        .sort(byBaseStatTotal),
+    [byAllQueries, withSuggestedMoves, query]
+  );
+
+  const teamSuggestions = useMemo(
+    () =>
+      isReady
+        ? pokemonResultList
+            .filter((p) => team.includes(p.name))
+            .filter(byAllQueries(query))
+            .map(withSuggestedMoves(query))
+            .sort(byBaseStatTotal)
+        : [],
+    [team, isReady, query, byAllQueries, withSuggestedMoves]
+  );
 
   return {
     query,
