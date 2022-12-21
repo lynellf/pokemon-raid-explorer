@@ -18,8 +18,8 @@ function resetOnChange(handleChange, setPage) {
 }
 
 export default function useFilterWithPager() {
-  const { handleChange, query, results } = usePokemonDataFilters();
-  const { pagination, currentResults, total } = usePager(results);
+  const { handleChange, query, nonTeamSuggestions } = usePokemonDataFilters();
+  const { pagination, currentResults, total } = usePager(nonTeamSuggestions);
 
   const { setPage } = pagination;
 
