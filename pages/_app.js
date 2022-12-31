@@ -1,9 +1,12 @@
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, AppShell, Header } from "@mantine/core";
+import Appbar from "components/Appbar";
 
 function MyApp({ Component, pageProps }) {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Component {...pageProps} />
+      <AppShell header={<Appbar />}>
+        <Component {...pageProps} />
+      </AppShell>
     </MantineProvider>
   );
 }

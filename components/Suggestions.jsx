@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Table, List, Container, Pagination } from "@mantine/core";
 import PaddedTitle from "components/PaddedTitle";
+import usePager from "hooks/usePager";
 import getTier from "utils/getTier";
 
 const FlexList = styled(List)`
@@ -21,12 +22,13 @@ const PagerContainer = styled.div`
 
 /**
  * @typedef {Object} ResultsProps
- * @property {ReturnType<typeof import('hooks/usePokemonDataFilters')['default']>['results']} ResultsProps.results
+ * @property {any[]} ResultsProps.results
  * @param {ResultsProps} { results }
  */
-export default function Results({ results, pagination, total }) {
+export default function Suggestions({ data = [] }) {
+  const { pagination, currentResults, total } = usePager(data);
   const { active, setPage } = pagination;
-  const hasNoResults = results.length === 0;
+  const hasNoResults = currentResults.length === 0;
 
   if (hasNoResults) {
     return (
@@ -38,7 +40,7 @@ export default function Results({ results, pagination, total }) {
 
   return (
     <div>
-      {results.map((data, i) => (
+      {currentResults.map((data, i) => (
         <BorderedBox key={`${data.name}_${i}`}>
           <div>
             <PaddedTitle order={3}>{data.name}</PaddedTitle>
