@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { curry } from "lodash";
 import localforage from "localforage";
 
-const STORAGE_KEY = "pokemon-raid-explorer-team";
+export const STORAGE_KEY = "pokemon-raid-explorer-team";
 
 /**
  * @type {{ isReady: boolean; team: string[] }}

@@ -37,3 +37,7 @@ next-env.d.ts
 
 # visual studio code / ide
 .vscode
+
+# cypress tests
+cypress/videos
+cypress/screenshots

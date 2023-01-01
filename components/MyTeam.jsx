@@ -52,7 +52,9 @@ export default function MyTeam() {
         <p>Already have Pokemon to use for Tera raids? Add them here!</p>
       </div>
       <Select
+        aria-label="Add a Pokemon to My Team"
         label="Add Pokemon to team"
+        placeholder="Add a Pokemon to My Team"
         data={selectOptions}
         searchable
         onChange={handleMemberChange}
