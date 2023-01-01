@@ -1,14 +1,12 @@
 function selectTeraRaidBoss(pokemonName, pokemonType) {
   return cy
-    .findByPlaceholderText("Select Raid Boss")
+    .findByLabelText("Raid Boss Selection Input")
     .type(pokemonName)
-    .type("{downArrow}")
-    .type("{enter}")
+    .type("{downArrow}{enter}")
     .then(() => {
-      cy.findByPlaceholderText("Select Tera Type")
+      cy.findByLabelText("Tera Type Selection Input")
         .type(pokemonType)
-        .type("{downArrow}")
-        .type("{enter}");
+        .type("{downArrow}{enter}");
     });
 }
 

@@ -28,3 +28,6 @@
 // https://testing-library.com/docs/cypress-testing-library/intro
 import "@testing-library/cypress/add-commands";
 import "./select-tera-raid-boss";
+import "./add-to-my-team";
+import "./open-my-team";
+import "./clear-local-db";
