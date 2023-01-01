@@ -30,6 +30,7 @@ export default function Appbar() {
         onClose={toggleModalOnClick}
         opened={isOpen}
         fullScreen
+        closeButtonLabel="Close My Team"
       >
         <MyTeam />
       </Modal>

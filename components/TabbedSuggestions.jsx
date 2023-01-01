@@ -6,7 +6,7 @@ export default function TabbedSuggestions({
   nonTeamSuggestions = []
 }) {
   return (
-    <Tabs defaultValue="non-team-suggestions">
+    <Tabs keepMounted={false} defaultValue="non-team-suggestions">
       <Tabs.List>
         <Tabs.Tab value="non-team-suggestions">Suggested</Tabs.Tab>
         <Tabs.Tab value="team-suggestions">My Team</Tabs.Tab>

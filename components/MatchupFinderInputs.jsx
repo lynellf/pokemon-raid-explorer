@@ -38,6 +38,7 @@ export default function MatchupFinderInputs(props) {
         data={raidBossSelectOptions}
         label="Raid Boss"
         onChange={handleSelectChange(EVENT_SEND_RAID_BOSS)}
+        aria-label="Raid Boss Selection Input"
         placeholder="Select Raid Boss"
         searchable
       />
@@ -46,6 +47,7 @@ export default function MatchupFinderInputs(props) {
         label="Raid Boss Tera Type"
         onChange={handleSelectChange(EVENT_SEND_TERA_TYPE)}
         placeholder="Select Tera Type"
+        aria-label="Tera Type Selection Input"
         searchable
       />
     </Container>
