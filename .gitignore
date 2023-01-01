@@ -40,3 +40,4 @@ next-env.d.ts
 
 # cypress tests
 cypress/videos
+cypress/screenshots
