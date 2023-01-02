@@ -17,5 +17,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          # Creates a local build for the dev server
+          build: npm run build
           # Starts a local server for tests
           start: npm start
