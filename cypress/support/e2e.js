@@ -14,7 +14,11 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// accessibility testing with axe-core
+// https://github.com/component-driven/cypress-axe
+import "cypress-axe";
