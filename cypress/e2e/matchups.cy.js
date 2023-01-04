@@ -17,6 +17,6 @@ describe("finding suitable counters for a specific raid boss and its tera type",
   });
 
   it("has no detectable a11y violations", () => {
-    cy.checkA11y("#appContent");
+    cy.checkA11yWithBetterLogs("#appContent");
   });
 });

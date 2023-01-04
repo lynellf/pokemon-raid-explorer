@@ -28,7 +28,7 @@ describe("storing and displaying a list of specific pokemon", () => {
 
   it("has no detectable a11y violations", () => {
     cy.openMyTeam();
-    cy.checkA11y("div[aria-label='My Team Modal']");
+    cy.checkA11yWithBetterLogs("div[aria-label='My Team Modal']");
   });
 
   it("removes pokemon from my team", () => {
