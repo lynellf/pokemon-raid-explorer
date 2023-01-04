@@ -21,17 +21,15 @@ function ListItem({ name, onClick }) {
   const handleRemove = curry(onRemove);
 
   return (
-    <>
+    <li>
       <Divider />
-      <li>
-        <FlexContainer>
-          <span>{name}</span>
-          <Button onClick={handleRemove({ name, onClick })} color="red">
-            Remove
-          </Button>
-        </FlexContainer>
-      </li>
-    </>
+      <FlexContainer>
+        <span>{name}</span>
+        <Button onClick={handleRemove({ name, onClick })} color="red">
+          Remove
+        </Button>
+      </FlexContainer>
+    </li>
   );
 }
 
@@ -47,7 +45,7 @@ export default function MyTeam() {
     [team]
   );
   return (
-    <Container>
+    <Container aria-label="My Team Modal">
       <div>
         <p>Already have Pokemon to use for Tera raids? Add them here!</p>
       </div>
