@@ -1,6 +1,7 @@
 describe("storing and displaying a list of specific pokemon", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
+    cy.injectAxe();
   });
 
   const team = ["Abomasnow", "Charmander", "Pikachu"];
@@ -23,6 +24,11 @@ describe("storing and displaying a list of specific pokemon", () => {
   it('"remembers" my team after a page reload', () => {
     cy.openMyTeam();
     cy.findAllByText("Remove").should("have.lengthOf", team.length);
+  });
+
+  it("has no detectable a11y violations", () => {
+    cy.openMyTeam();
+    cy.checkA11y("div[aria-label='My Team Modal']");
   });
 
   it("removes pokemon from my team", () => {
