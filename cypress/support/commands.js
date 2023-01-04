@@ -31,3 +31,4 @@ import "./select-tera-raid-boss";
 import "./add-to-my-team";
 import "./open-my-team";
 import "./clear-local-db";
+import "./check-a11y-with-better-logs";
