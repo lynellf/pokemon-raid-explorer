@@ -1,4 +1,7 @@
 // copied from https://www.npmjs.com/package/cypress-axe
+/**
+ * @param {axe.Result[]} violations
+ */
 function terminalLog(violations) {
   // what is cy.task doing here?
   // it's asking node to perform a console log
@@ -18,8 +21,13 @@ function terminalLog(violations) {
       nodes: nodes.length
     })
   );
+  const allNodes = violations.flatMap(({ nodes }) =>
+    nodes.map(({ html, failureSummary }) => ({ html, failureSummary }))
+  );
 
   cy.task("table", violationData);
+
+  cy.task("table", allNodes);
 }
 
 function checkA11yWithBetterLogs(context, options) {
