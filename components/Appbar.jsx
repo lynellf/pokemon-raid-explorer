@@ -1,39 +1,16 @@
-import { useState } from "react";
-import { Header, Modal, Button, Title } from "@mantine/core";
-import { curry } from "lodash";
+import { Header, Title } from "@mantine/core";
 import styled from "styled-components";
-import MyTeam from "components/MyTeam";
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
+const Brand = styled(Title)`
+  padding: 0 1rem;
 `;
 
 export default function Appbar() {
-  const [isOpen, setOpen] = useState(false);
-  const handleClick = curry(toggleModal);
-  const toggleModalOnClick = handleClick(setOpen);
-
   return (
     <>
       <Header height={50}>
-        <FlexContainer>
-          <Title>Raid Explorer</Title>
-          <div>
-            <Button onClick={toggleModalOnClick}>My Team</Button>
-          </div>
-        </FlexContainer>
+        <Brand>Raid Explorer</Brand>
       </Header>
-      <Modal
-        title={<Title>My Team</Title>}
-        onClose={toggleModalOnClick}
-        opened={isOpen}
-        fullScreen
-        closeButtonLabel="Close My Team"
-      >
-        <MyTeam />
-      </Modal>
     </>
   );
 }
