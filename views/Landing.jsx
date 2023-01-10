@@ -3,7 +3,7 @@ import FilterWithResults from "views/FilterWithResults";
 import MatchupFinder from "views/MatchupFinder";
 export default function Landing() {
   return (
-    <>
+    <div aria-label="Matchup Finder">
       <Title order={2}>Matchup Finder</Title>
       <Tabs defaultValue="matchups">
         <Tabs.List>
@@ -17,6 +17,6 @@ export default function Landing() {
           <FilterWithResults />
         </Tabs.Panel>
       </Tabs>
-    </>
+    </div>
   );
 }

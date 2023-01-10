@@ -1,6 +1,11 @@
 const team = ["Abomasnow", "Charmander", "Pikachu"];
 const route = "http://localhost:3000/my-team";
 describe("storing and displaying a list of specific pokemon", () => {
+  beforeEach(() => {
+    cy.visit("localhost:3000/my-team");
+    cy.injectAxe();
+  });
+
   it("adds pokemon to my team", () => {
     cy.clearLocalDB();
     cy.visit(route).then(() => {
@@ -14,6 +19,10 @@ describe("storing and displaying a list of specific pokemon", () => {
     cy.visit(route).then(() => {
       cy.findAllByText("Remove").should("have.lengthOf", team.length);
     });
+  });
+
+  it("has no detectable a11y violations", () => {
+    cy.checkA11yWithBetterLogs("div[aria-label='My Team View']");
   });
 
   it("removes pokemon from my team", () => {
