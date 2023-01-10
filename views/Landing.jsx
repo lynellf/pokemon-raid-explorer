@@ -1,9 +1,10 @@
-import { Tabs, Container } from "@mantine/core";
+import { Tabs, Title } from "@mantine/core";
 import FilterWithResults from "views/FilterWithResults";
 import MatchupFinder from "views/MatchupFinder";
 export default function Landing() {
   return (
-    <Container>
+    <>
+      <Title order={2}>Matchup Finder</Title>
       <Tabs defaultValue="matchups">
         <Tabs.List>
           <Tabs.Tab value="matchups">Matchups</Tabs.Tab>
@@ -16,6 +17,6 @@ export default function Landing() {
           <FilterWithResults />
         </Tabs.Panel>
       </Tabs>
-    </Container>
+    </>
   );
 }
