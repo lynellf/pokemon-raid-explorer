@@ -45,7 +45,7 @@ export default function MyTeam() {
   );
 
   return (
-    <>
+    <div aria-label="My Team View">
       <Title order={2}>My Team</Title>
       <div>
         <p>Already have Pokemon to use for Tera raids? Add them here!</p>
@@ -63,7 +63,7 @@ export default function MyTeam() {
           <ListItem onClick={handleMemberChange} key={p} name={p} />
         ))}
       </FixedHeightList>
-    </>
+    </div>
   );
 }
 
