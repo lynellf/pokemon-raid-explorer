@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "cypress run",
+    "test:e2e": "playwright test",
     "test:ui": "cypress open"
   },
   "dependencies": {
@@ -28,8 +28,11 @@
     "xstate": "^4.34.0"
   },
   "devDependencies": {
+    "@playwright-testing-library/test": "^4.5.0",
+    "@playwright/test": "^1.29.2",
     "@testing-library/cypress": "^9.0.0",
     "axe-core": "^4.6.1",
+    "axe-playwright": "^1.1.12",
     "cypress": "^12.2.0",
     "cypress-axe": "^1.2.0"
   }

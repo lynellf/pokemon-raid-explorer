@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["cypress", "@testing-library/cypress", "cypress-axe"]
+    "types": ["axe-playwright"]
   }
 }

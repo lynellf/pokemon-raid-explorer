@@ -41,3 +41,6 @@ next-env.d.ts
 # cypress tests
 cypress/videos
 cypress/screenshots
+/test-results/
+/playwright-report/
+/playwright/.cache/
