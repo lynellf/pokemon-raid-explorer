@@ -22,9 +22,7 @@ const Container = styled.div`
 function MyApp({ Component, pageProps }) {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <header>
-        <Appbar />
-      </header>
+      <Appbar />
       <main>
         <AppShell>
           <aside>

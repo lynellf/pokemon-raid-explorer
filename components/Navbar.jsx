@@ -13,10 +13,6 @@ const NavMenu = styled.ul`
     width: 100%;
     height: 100%;
     padding: 1rem;
-
-    &:hover {
-      background-color: #e9ecef;
-    }
   }
 
   @media (min-width: 768px) {
@@ -36,7 +32,7 @@ const NavContainer = styled.nav`
 const NavItem = ({ label, href }) => (
   <li>
     <Link href={href}>
-      <Text size="lg" align="left" color="blue">
+      <Text size="lg" align="left">
         {label}
       </Text>
     </Link>
@@ -45,7 +41,7 @@ const NavItem = ({ label, href }) => (
 
 export default function Navbar() {
   return (
-    <NavContainer>
+    <NavContainer aria-label="side navigation">
       <NavMenu>
         <NavItem href="/" label="Matchups" />
         <NavItem href="/my-team" label="My Team" />
