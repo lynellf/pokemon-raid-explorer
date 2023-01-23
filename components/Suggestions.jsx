@@ -21,28 +21,26 @@ const PagerContainer = styled.div`
 `;
 
 /**
+ * @description By default, screen readers will fail to recognize some buttons within Mantine's
+ * pagination component. This callback looks up and returns the appropriate aria label
+ * for each page item.
  *
- * @param {HTMLDivElement} rootEl
+ * references:
+ * https://mantine.dev/core/pagination/#accessibility
+ * https://dequeuniversity.com/rules/axe/4.6/button-name?application=axeAPI
+ *
+ * @param {string} page pagination item context or page number
  */
-const setAriaRolesForPager = (labelBack, labelForward) => (rootEl) => {
-  const children = [...(rootEl?.children ?? [])];
-  const backBtn = children?.at(0);
-  // array.prototype.at(-1) selects the last item
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
-  const forwardBtn = children?.at(-1);
-  const ellipsisBtn = rootEl?.querySelector('button[data-dots="true"]');
-
-  if (backBtn) {
-    backBtn.setAttribute("aria-label", labelBack);
-  }
-
-  if (forwardBtn) {
-    forwardBtn.setAttribute("aria-label", labelForward);
-  }
-
-  if (ellipsisBtn) {
-    ellipsisBtn.setAttribute("aria-label", "ellipsis");
-  }
+const setAriaLabelsForPageBtns = (page) => {
+  return (
+    {
+      dots: "ellipsis item",
+      prev: "previous page button",
+      next: "next page button",
+      first: "first page button",
+      last: "last page button"
+    }[page] ?? `page ${page} button`
+  );
 };
 
 /**
@@ -145,7 +143,7 @@ export default function Suggestions({ data = [] }) {
           page={active}
           total={total}
           onChange={setPage}
-          ref={setAriaRolesForPager("previous page", "next page")}
+          getItemAriaLabel={setAriaLabelsForPageBtns}
         />
       </PagerContainer>
     </div>
