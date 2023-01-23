@@ -34,6 +34,7 @@
     "axe-core": "^4.6.1",
     "axe-playwright": "^1.1.12",
     "cypress": "^12.2.0",
-    "cypress-axe": "^1.2.0"
+    "cypress-axe": "^1.2.0",
+    "dotenv": "^16.0.3"
   }
 }
