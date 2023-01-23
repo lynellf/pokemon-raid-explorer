@@ -1,8 +1,9 @@
-import { Header, Title } from "@mantine/core";
+import { Header } from "@mantine/core";
 import styled from "styled-components";
 
-const Brand = styled(Title)`
+const Brand = styled.h1`
   padding: 0 1rem;
+  margin: 0;
 `;
 
 export default function Appbar() {
@@ -13,8 +14,4 @@ export default function Appbar() {
       </Header>
     </>
   );
-}
-
-function toggleModal(setOpen, _event) {
-  setOpen((current) => !current);
 }

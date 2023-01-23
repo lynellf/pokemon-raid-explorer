@@ -21,6 +21,31 @@ const PagerContainer = styled.div`
 `;
 
 /**
+ *
+ * @param {HTMLDivElement} rootEl
+ */
+const setAriaRolesForPager = (labelBack, labelForward) => (rootEl) => {
+  const children = [...(rootEl?.children ?? [])];
+  const backBtn = children?.at(0);
+  // array.prototype.at(-1) selects the last item
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+  const forwardBtn = children?.at(-1);
+  const ellipsisBtn = rootEl?.querySelector('button[data-dots="true"]');
+
+  if (backBtn) {
+    backBtn.setAttribute("aria-label", labelBack);
+  }
+
+  if (forwardBtn) {
+    forwardBtn.setAttribute("aria-label", labelForward);
+  }
+
+  if (ellipsisBtn) {
+    ellipsisBtn.setAttribute("aria-label", "ellipsis");
+  }
+};
+
+/**
  * @typedef {Object} ResultsProps
  * @property {any[]} ResultsProps.results
  * @param {ResultsProps} { results }
@@ -116,7 +141,12 @@ export default function Suggestions({ data = [] }) {
         </BorderedBox>
       ))}
       <PagerContainer>
-        <Pagination page={active} total={total} onChange={setPage} />
+        <Pagination
+          page={active}
+          total={total}
+          onChange={setPage}
+          ref={setAriaRolesForPager("previous page", "next page")}
+        />
       </PagerContainer>
     </div>
   );

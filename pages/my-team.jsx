@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Select, List, Divider, Button, Container, Title } from "@mantine/core";
+import { Select, List, Divider, Button, Title } from "@mantine/core";
 import { curry } from "lodash";
 import styled from "styled-components";
 import useMyTeam from "hooks/useMyTeam";
@@ -20,17 +20,15 @@ const FlexContainer = styled.div`
 function ListItem({ name, onClick }) {
   const handleRemove = curry(onRemove);
   return (
-    <>
+    <li>
       <Divider />
-      <li>
-        <FlexContainer>
-          <span>{name}</span>
-          <Button onClick={handleRemove({ name, onClick })} color="red">
-            Remove
-          </Button>
-        </FlexContainer>
-      </li>
-    </>
+      <FlexContainer>
+        <span>{name}</span>
+        <Button onClick={handleRemove({ name, onClick })} color="red">
+          Remove
+        </Button>
+      </FlexContainer>
+    </li>
   );
 }
 
@@ -47,7 +45,7 @@ export default function MyTeam() {
   );
 
   return (
-    <>
+    <div aria-label="My Team View">
       <Title order={2}>My Team</Title>
       <div>
         <p>Already have Pokemon to use for Tera raids? Add them here!</p>
@@ -65,7 +63,7 @@ export default function MyTeam() {
           <ListItem onClick={handleMemberChange} key={p} name={p} />
         ))}
       </FixedHeightList>
-    </>
+    </div>
   );
 }
 
