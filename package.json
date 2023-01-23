@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "playwright test",
-    "test:ui": "cypress open"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -33,8 +32,6 @@
     "@testing-library/cypress": "^9.0.0",
     "axe-core": "^4.6.1",
     "axe-playwright": "^1.1.12",
-    "cypress": "^12.2.0",
-    "cypress-axe": "^1.2.0",
     "dotenv": "^16.0.3"
   }
 }
