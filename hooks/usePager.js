@@ -1,7 +1,7 @@
 import { usePagination } from "@mantine/hooks";
 import chunkArr from "utils/chunkArr";
 
-const PAGINATION_PER_PAGE_DEFAULT = 10;
+const PAGINATION_PER_PAGE_DEFAULT = 2;
 export default function usePager(data = []) {
   const pages = chunkArr(data, PAGINATION_PER_PAGE_DEFAULT);
   const total = pages.length;
