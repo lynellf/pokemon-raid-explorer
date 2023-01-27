@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Landing from "views/Landing";
+import MatchupFinder from "components/MatchupFinder";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Landing />
+      <MatchupFinder />
     </div>
   );
 }
