@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Table, List, Container, Pagination } from "@mantine/core";
+import { Table, List, Container, Pagination, Title } from "@mantine/core";
 import PaddedTitle from "components/PaddedTitle";
 import usePager from "hooks/usePager";
 import getTier from "utils/getTier";
@@ -62,9 +62,10 @@ export default function Suggestions({ data = [] }) {
   }
 
   return (
-    <div>
+    <Container>
+      <Title order={2}>Results</Title>
       {currentResults.map((data, i) => (
-        <BorderedBox key={`${data.name}_${i}`}>
+        <Container key={`${data.name}_${i}`}>
           <div>
             <PaddedTitle order={3}>{data.name}</PaddedTitle>
             <FlexList listStyleType={"none"}>
@@ -136,7 +137,7 @@ export default function Suggestions({ data = [] }) {
               </FlexList>
             </div>
           )}
-        </BorderedBox>
+        </Container>
       ))}
       <PagerContainer>
         <Pagination
@@ -146,6 +147,6 @@ export default function Suggestions({ data = [] }) {
           getItemAriaLabel={setAriaLabelsForPageBtns}
         />
       </PagerContainer>
-    </div>
+    </Container>
   );
 }
