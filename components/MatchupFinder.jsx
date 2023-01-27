@@ -1,7 +1,7 @@
 import { Container } from "@mantine/core";
 import MatchupFinderInputs from "components/MatchupFinderInputs";
-import TabbedSuggestions from "components/TabbedSuggestions";
 import useRaidBossMatchupFinder from "hooks/useRaidBossMatchupFinder";
+import Suggestions from "components/Suggestions";
 
 export default function MatchupFinder() {
   const { send, teamSuggestions, nonTeamSuggestions } =
@@ -10,10 +10,7 @@ export default function MatchupFinder() {
   return (
     <Container>
       <MatchupFinderInputs send={send} />
-      <TabbedSuggestions
-        nonTeamSuggestions={nonTeamSuggestions}
-        teamSuggestions={teamSuggestions}
-      />
+      <Suggestions data={[...teamSuggestions, ...nonTeamSuggestions]} />
     </Container>
   );
 }
