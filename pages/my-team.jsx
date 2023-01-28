@@ -67,6 +67,6 @@ export default function MyTeam() {
   );
 }
 
-function onRemove({ name, onClick }, _event) {
+function onRemove({ name, onClick }) {
   onClick(name);
 }
