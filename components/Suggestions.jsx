@@ -11,10 +11,6 @@ const FlexList = styled(List)`
   flex-wrap: wrap;
 `;
 
-const BorderedBox = styled(Container)`
-  border-top: thin solid black;
-`;
-
 const PagerContainer = styled.div`
   display: flex;
   justify-content: center;
